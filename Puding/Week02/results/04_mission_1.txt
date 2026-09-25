@@ -1,0 +1,34 @@
+--------------
+-- 요구사항: 문학 카테고리에서 대여 가능한 도서의 제목·설명·카테고리 이름을
+--------------
+
+--------------
+-- 최신순(book_id DESC)으로 최대 10개 보여 줍니다.
+--------------
+
+--------------
+-- book 기준으로 category 이름이 필요해 분류 FK로 INNER JOIN합니다.
+--------------
+
+--------------
+-- WHERE로 문학/대여 가능 조건을 적용하고, ID 역순으로 첫 10개를 조회합니다.
+--------------
+
+--------------
+SELECT
+    b.title,
+    b.description,
+    c.name AS category_name
+FROM book AS b
+INNER JOIN category AS c ON c.category_id = b.category_id
+WHERE c.name = '문학'
+  AND b.is_available = TRUE
+ORDER BY b.book_id DESC
+LIMIT 10 OFFSET 0
+--------------
+
++------------------+-------------+---------------+
+| title            | description | category_name |
++------------------+-------------+---------------+
+| 달빛 도서관      | 소설        | 문학          |
++------------------+-------------+---------------+

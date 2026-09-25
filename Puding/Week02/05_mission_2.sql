@@ -1,0 +1,16 @@
+USE umc_week02_library;
+SET @user_id = 1; -- 민서. 2(수현)로 바꾸면 미반납 대여가 없어 0행입니다.
+
+-- 요구사항: 특정 사용자가 아직 반납하지 않은 책의 제목·대여일·반납 예정일.
+-- rental 기준으로 도서 제목이 필요해 book을 도서 FK로 INNER JOIN합니다.
+-- 사용자와 returned_at IS NULL로 필터링하고 due_at, rental_id 순서로 조회합니다.
+-- 반납 예정일이 지났어도 미반납이면 포함하며, 요구사항에 없는 건수 제한은 두지 않습니다.
+SELECT
+    b.title,
+    r.rented_at,
+    r.due_at
+FROM rental AS r
+INNER JOIN book AS b ON b.book_id = r.book_id
+WHERE r.user_id = @user_id
+  AND r.returned_at IS NULL
+ORDER BY r.due_at ASC, r.rental_id ASC;

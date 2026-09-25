@@ -1,0 +1,21 @@
+flowchart LR
+    subgraph M1["미션 1 · 문학 / 대여 가능"]
+        B1["book<br/>도서"] -->|"INNER JOIN · 분류 FK"| C1["category<br/>도서 분류"]
+    end
+
+    subgraph M2["미션 2 · 사용자별 미반납"]
+        R2["rental<br/>사용자 FK 필터<br/>returned_at IS NULL"] -->|"INNER JOIN · 도서 FK"| B2["book<br/>도서 제목"]
+    end
+
+    subgraph M3["미션 3 · 도서 태그 / 사용자 좋아요"]
+        B3["book<br/>조회 도서 · 기준 행"] -->|"LEFT JOIN · 도서 FK"| BT3["book_tag<br/>도서-태그 연결"]
+        BT3 -->|"LEFT JOIN · 태그 FK"| T3["tag<br/>태그 이름"]
+        B3 -->|"LEFT JOIN · 도서 FK<br/>조회 사용자 조건은 ON"| BL3["book_like<br/>존재: 좋아요 1<br/>없음: 좋아요 0"]
+    end
+
+    subgraph EX["확장 · 지역별 새로 도전 가능한 미션"]
+        ME["mission<br/>마감 전 · 삭제 안 됨"] -->|"INNER JOIN · store_id = id"| SE["store<br/>가게 · 삭제 안 됨"]
+        SE -->|"INNER JOIN · region_id = id"| RE["region<br/>조회 지역 · 삭제 안 됨"]
+        SE -->|"INNER JOIN · food_category_id = id"| FE["food_category<br/>음식 종류 · 삭제 안 됨"]
+        ME -->|"LEFT JOIN · id = mission_id<br/>조회 회원 조건은 ON"| MME["member_mission<br/>모든 과거 도전 포함<br/>연결된 id IS NULL만 반환"]
+    end

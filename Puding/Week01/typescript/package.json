@@ -1,0 +1,18 @@
+{
+  "name": "umc-week01-typescript",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "UMC 1주차 TypeScript 스터디 회원 관리 미션",
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "optional": "node dist/optional.js",
+    "check": "pnpm typecheck && pnpm build && pnpm start && pnpm optional"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
+  }
+}

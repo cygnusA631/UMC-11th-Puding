@@ -1,0 +1,199 @@
+{
+  "checkedAt": "2026-09-23",
+  "bookmarkChecks": [
+    {
+      "movie": "스파이더맨: 브랜드 뉴 데이 북마크",
+      "selectedMovieOnly": true,
+      "iconChanged": true,
+      "toggledBack": true
+    },
+    {
+      "movie": "오디세이 북마크",
+      "selectedMovieOnly": true,
+      "iconChanged": true,
+      "toggledBack": true
+    },
+    {
+      "movie": "스파이더맨: 노 웨이 홈 북마크",
+      "selectedMovieOnly": true,
+      "iconChanged": true,
+      "toggledBack": true
+    },
+    {
+      "movie": "라스트 하우스 북마크",
+      "selectedMovieOnly": true,
+      "iconChanged": true,
+      "toggledBack": true
+    },
+    {
+      "movie": "미니언즈 & 몬스터즈 북마크",
+      "selectedMovieOnly": true,
+      "iconChanged": true,
+      "toggledBack": true
+    },
+    {
+      "movie": "군체 북마크",
+      "selectedMovieOnly": true,
+      "iconChanged": true,
+      "toggledBack": true
+    },
+    {
+      "movie": "토이 스토리 5 북마크",
+      "selectedMovieOnly": true,
+      "iconChanged": true,
+      "toggledBack": true
+    },
+    {
+      "movie": "로빈 후드의 죽음 북마크",
+      "selectedMovieOnly": true,
+      "iconChanged": true,
+      "toggledBack": true
+    },
+    {
+      "movie": "옵세션 북마크",
+      "selectedMovieOnly": true,
+      "iconChanged": true,
+      "toggledBack": true
+    },
+    {
+      "movie": "이블 데드 번 북마크",
+      "selectedMovieOnly": true,
+      "iconChanged": true,
+      "toggledBack": true
+    }
+  ],
+  "paginationChecks": [
+    {
+      "page": 1,
+      "active": [
+        "1"
+      ],
+      "activeBackground": "rgb(32, 71, 205)",
+      "nextDisabled": false,
+      "previousDisabled": true
+    },
+    {
+      "page": 2,
+      "active": [
+        "2"
+      ],
+      "activeBackground": "rgb(32, 71, 205)",
+      "nextDisabled": false,
+      "previousDisabled": false
+    },
+    {
+      "page": 3,
+      "active": [
+        "3"
+      ],
+      "activeBackground": "rgb(32, 71, 205)",
+      "nextDisabled": false,
+      "previousDisabled": false
+    },
+    {
+      "page": 4,
+      "active": [
+        "4"
+      ],
+      "activeBackground": "rgb(32, 71, 205)",
+      "nextDisabled": false,
+      "previousDisabled": false
+    },
+    {
+      "page": 5,
+      "active": [
+        "5"
+      ],
+      "activeBackground": "rgb(32, 71, 205)",
+      "nextDisabled": true,
+      "previousDisabled": false
+    }
+  ],
+  "responsiveChecks": [
+    {
+      "cards": 10,
+      "columns": 5,
+      "horizontalOverflow": false,
+      "width": 1440
+    },
+    {
+      "cards": 10,
+      "columns": 3,
+      "horizontalOverflow": false,
+      "width": 1000
+    },
+    {
+      "cards": 10,
+      "columns": 2,
+      "horizontalOverflow": false,
+      "width": 700
+    },
+    {
+      "cards": 10,
+      "columns": 1,
+      "horizontalOverflow": false,
+      "width": 390
+    }
+  ],
+  "keyboardBookmark": true,
+  "pageArrows": true,
+  "activeHoverBackground": "rgb(32, 71, 205)",
+  "consoleErrors": [],
+  "initialBookmarks": [
+    {
+      "icon": "/icons/bookmark-outline.svg",
+      "name": "스파이더맨: 브랜드 뉴 데이 북마크",
+      "pressed": "false"
+    },
+    {
+      "icon": "/icons/bookmark.svg",
+      "name": "오디세이 북마크",
+      "pressed": "true"
+    },
+    {
+      "icon": "/icons/bookmark-outline.svg",
+      "name": "스파이더맨: 노 웨이 홈 북마크",
+      "pressed": "false"
+    },
+    {
+      "icon": "/icons/bookmark-outline.svg",
+      "name": "라스트 하우스 북마크",
+      "pressed": "false"
+    },
+    {
+      "icon": "/icons/bookmark-outline.svg",
+      "name": "미니언즈 & 몬스터즈 북마크",
+      "pressed": "false"
+    },
+    {
+      "icon": "/icons/bookmark-outline.svg",
+      "name": "군체 북마크",
+      "pressed": "false"
+    },
+    {
+      "icon": "/icons/bookmark.svg",
+      "name": "토이 스토리 5 북마크",
+      "pressed": "true"
+    },
+    {
+      "icon": "/icons/bookmark-outline.svg",
+      "name": "로빈 후드의 죽음 북마크",
+      "pressed": "false"
+    },
+    {
+      "icon": "/icons/bookmark-outline.svg",
+      "name": "옵세션 북마크",
+      "pressed": "false"
+    },
+    {
+      "icon": "/icons/bookmark-outline.svg",
+      "name": "이블 데드 번 북마크",
+      "pressed": "false"
+    }
+  ],
+  "imageLoading": {
+    "checked": 26,
+    "allLoaded": true
+  },
+  "build": "pnpm build passed"
+}

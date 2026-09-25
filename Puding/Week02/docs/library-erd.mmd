@@ -1,0 +1,62 @@
+erDiagram
+    %% Source: ../01_schema.sql (MySQL 8.4 common library schema)
+    %% Dashed relationships: child FK is not part of the child PK.
+    %% Solid relationships: child FK is part of its composite PK.
+    %% book_tag PK = (book_id, tag_id); book_like PK = (user_id, book_id).
+
+    users {
+        BIGINT user_id PK "AUTO_INCREMENT"
+        VARCHAR(30) nickname "NOT NULL"
+    }
+
+    category {
+        BIGINT category_id PK "AUTO_INCREMENT"
+        VARCHAR(50) name "NOT NULL"
+    }
+
+    book {
+        BIGINT book_id PK "AUTO_INCREMENT"
+        BIGINT category_id FK "NOT NULL"
+        VARCHAR(100) title "NOT NULL"
+        TEXT description "NULL allowed"
+        BOOLEAN is_available "NOT NULL; DEFAULT TRUE"
+    }
+
+    rental {
+        BIGINT rental_id PK "AUTO_INCREMENT"
+        BIGINT user_id FK "NOT NULL"
+        BIGINT book_id FK "NOT NULL"
+        DATETIME rented_at "NOT NULL"
+        DATETIME due_at "NOT NULL"
+        DATETIME returned_at "NULL allowed"
+    }
+
+    tag {
+        BIGINT tag_id PK "AUTO_INCREMENT"
+        VARCHAR(30) name "NOT NULL"
+    }
+
+    book_tag {
+        BIGINT book_id PK, FK "Composite PK; NOT NULL"
+        BIGINT tag_id PK, FK "Composite PK; NOT NULL"
+    }
+
+    book_like {
+        BIGINT user_id PK, FK "Composite PK; NOT NULL"
+        BIGINT book_id PK, FK "Composite PK; NOT NULL"
+    }
+
+    notification {
+        BIGINT notification_id PK "AUTO_INCREMENT"
+        BIGINT user_id FK "NOT NULL"
+        VARCHAR(30) type "NOT NULL"
+    }
+
+    category ||..o{ book : "category_id"
+    users ||..o{ rental : "user_id"
+    book ||..o{ rental : "book_id"
+    book ||--o{ book_tag : "book_id"
+    tag ||--o{ book_tag : "tag_id"
+    users ||--o{ book_like : "user_id"
+    book ||--o{ book_like : "book_id"
+    users ||..o{ notification : "user_id"

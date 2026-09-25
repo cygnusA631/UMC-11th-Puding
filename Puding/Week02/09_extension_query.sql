@@ -1,0 +1,37 @@
+USE umc_week02_reward;
+SET @member_id = 1;
+SET @region_id = 1; -- 안암동
+SET @as_of = CAST('2026-09-22 12:00:00' AS DATETIME);
+-- 결과 재현을 위해 기준 시각을 고정했습니다. 실제 현재 기준 조회는 NOW()를 사용합니다.
+
+-- 요구사항: 로그인한 회원이 선택 지역에서 처음 도전할 수 있는 미션을
+-- 가게·음식분류·지역·최소 결제금액·보상과 함께 마감이 가까운 순으로 10개 조회합니다.
+-- mission 기준으로 store → region/food_category를 JOIN해 지역과 표시 정보를 얻습니다.
+-- 현재 회원의 member_mission은 LEFT JOIN하고, 이력이 없으며 마감 전/미삭제인 항목만 남깁니다.
+-- deadline, id 오름차순으로 정렬하고 LIMIT/OFFSET으로 첫 페이지를 반환합니다.
+-- 기존 UNIQUE(member_id, mission_id)에 맞춰 취소·완료·삭제 이력도 재도전에서 제외합니다.
+SELECT
+    m.id AS mission_id,
+    m.title,
+    s.name AS store_name,
+    c.name AS food_category,
+    r.name AS region_name,
+    m.min_amount,
+    m.reward_point,
+    m.deadline
+FROM mission AS m
+INNER JOIN store AS s ON s.id = m.store_id
+INNER JOIN region AS r ON r.id = s.region_id
+INNER JOIN food_category AS c ON c.id = s.food_category_id
+LEFT JOIN member_mission AS mm
+    ON mm.mission_id = m.id
+   AND mm.member_id = @member_id
+WHERE r.id = @region_id
+  AND m.deleted_at IS NULL
+  AND s.deleted_at IS NULL
+  AND r.deleted_at IS NULL
+  AND c.deleted_at IS NULL
+  AND m.deadline > @as_of
+  AND mm.id IS NULL
+ORDER BY m.deadline ASC, m.id ASC
+LIMIT 10 OFFSET 0;
