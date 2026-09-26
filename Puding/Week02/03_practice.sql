@@ -1,0 +1,31 @@
+USE umc_week02_library;
+
+-- 1. 단일 테이블: 대여 가능한 책, 최신순(실습에서는 book_id 기준).
+-- 예상: 우주를 읽는 법 → 달빛 도서관.
+SELECT book_id, title, description
+FROM book
+WHERE is_available = TRUE
+ORDER BY book_id DESC;
+
+-- 2. 필요한 정보가 다른 테이블에 있을 때 JOIN.
+SELECT b.book_id, b.title, c.name AS category_name
+FROM book AS b
+INNER JOIN category AS c ON c.category_id = b.category_id
+WHERE c.name = '문학'
+  AND b.is_available = TRUE
+ORDER BY b.book_id DESC
+LIMIT 10;
+
+-- 3. 같은 조건과 정렬로 페이지 범위만 변경합니다.
+-- 첫 페이지: 대여 가능 도서 2행. 두 번째 페이지: 데이터가 적으므로 0행.
+SELECT book_id, title, description
+FROM book
+WHERE is_available = TRUE
+ORDER BY book_id DESC
+LIMIT 10 OFFSET 0;
+
+SELECT book_id, title, description
+FROM book
+WHERE is_available = TRUE
+ORDER BY book_id DESC
+LIMIT 10 OFFSET 10;

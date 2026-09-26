@@ -1,0 +1,27 @@
+검증일: 2026-09-22
+Node.js v22.19.0 / pnpm 11.19.0 / TypeScript 7.0.2
+
+$ pnpm exec tsc --noEmit
+종료 코드 0, 타입 오류 없음
+
+$ pnpm exec tsc
+종료 코드 0, dist/index.js 및 dist/optional.js 생성
+
+$ node dist/index.js
+광수님, 스터디를 이끌어요. GitHub: gwangsoo
+지수님, 스터디에 참여해요. GitHub: 등록하지 않았어요.
+ID 999: 회원을 찾을 수 없어요.
+
+$ node dist/optional.js
+type ↔ interface: 현우
+studyHour || 1: 1
+studyHour ?? 1: 0
+formatMemberId(1): 숫자 ID: 1
+formatMemberId( member-02 ): 문자열 ID: MEMBER-02
+formatMemberId(true): 지원하지 않는 ID 형식이에요.
+formatMemberId(null): 지원하지 않는 ID 형식이에요.
+formatMemberId(undefined): 지원하지 않는 ID 형식이에요.
+formatMemberId([object Object]): 지원하지 않는 ID 형식이에요.
+formatMemberId(0): 숫자 ID: 0
+formatMemberId(): 비어 있는 문자열 ID예요.
+formatMemberId(NaN): 유효하지 않은 숫자 ID예요.

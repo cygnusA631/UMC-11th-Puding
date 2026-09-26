@@ -1,0 +1,38 @@
++---------------+------------------------------+-----------+
+| mysql_version | engine                       | time_zone |
++---------------+------------------------------+-----------+
+| 8.4.11        | MySQL Community Server - GPL | SYSTEM    |
++---------------+------------------------------+-----------+
++--------------------+------------------------+--------+
+| TABLE_SCHEMA       | TABLE_NAME             | ENGINE |
++--------------------+------------------------+--------+
+| umc_week02_library | book                   | InnoDB |
+| umc_week02_library | book_like              | InnoDB |
+| umc_week02_library | book_tag               | InnoDB |
+| umc_week02_library | category               | InnoDB |
+| umc_week02_library | notification           | InnoDB |
+| umc_week02_library | rental                 | InnoDB |
+| umc_week02_library | tag                    | InnoDB |
+| umc_week02_library | users                  | InnoDB |
+| umc_week02_reward  | food_category          | InnoDB |
+| umc_week02_reward  | member                 | InnoDB |
+| umc_week02_reward  | member_agreement       | InnoDB |
+| umc_week02_reward  | member_food_preference | InnoDB |
+| umc_week02_reward  | member_mission         | InnoDB |
+| umc_week02_reward  | mission                | InnoDB |
+| umc_week02_reward  | region                 | InnoDB |
+| umc_week02_reward  | social_account         | InnoDB |
+| umc_week02_reward  | store                  | InnoDB |
++--------------------+------------------------+--------+
++--------------+-----------+
+| table_name   | row_count |
++--------------+-----------+
+| users        |         2 |
+| category     |         2 |
+| book         |         3 |
+| rental       |         2 |
+| tag          |         3 |
+| book_tag     |         3 |
+| book_like    |         2 |
+| notification |         0 |
++--------------+-----------+
