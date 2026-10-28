@@ -1,0 +1,9 @@
+{
+  "phase": "cors-disabled",
+  "url": "http://localhost:8080/members/nickname/%EC%88%98%ED%98%84",
+  "status": 200,
+  "allowOrigin": null,
+  "body": {
+    "available": false
+  }
+}

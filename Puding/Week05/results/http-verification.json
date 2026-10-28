@@ -1,0 +1,167 @@
+{
+  "verifiedAt": "2026-10-28 Asia/Seoul",
+  "checks": [
+    {
+      "name": "닉네임 중복",
+      "method": "GET",
+      "url": "http://localhost:8080/members/nickname/%EC%88%98%ED%98%84",
+      "status": 200,
+      "allowOrigin": null,
+      "body": {
+        "available": false
+      }
+    },
+    {
+      "name": "닉네임 사용가능",
+      "method": "GET",
+      "url": "http://localhost:8080/members/nickname/%ED%91%B8%EB%94%A9",
+      "status": 200,
+      "allowOrigin": null,
+      "body": {
+        "available": true
+      }
+    },
+    {
+      "name": "이메일 중복",
+      "method": "GET",
+      "url": "http://localhost:8080/members/email/noco%40umc.com",
+      "status": 200,
+      "allowOrigin": null,
+      "body": {
+        "available": false
+      }
+    },
+    {
+      "name": "이메일 사용가능",
+      "method": "GET",
+      "url": "http://localhost:8080/members/email/puding%40example.com",
+      "status": 200,
+      "allowOrigin": null,
+      "body": {
+        "available": true
+      }
+    },
+    {
+      "name": "평점 최신순",
+      "method": "GET",
+      "url": "http://localhost:8080/members/1/ratings",
+      "status": 200,
+      "allowOrigin": null,
+      "body": [
+        {
+          "ratingId": 2,
+          "movieId": 155,
+          "score": 4,
+          "comment": "다시 봐도 명작",
+          "createdAt": "2026-10-28T11:00:00",
+          "updatedAt": "2026-10-28T11:00:00"
+        },
+        {
+          "ratingId": 1,
+          "movieId": 550,
+          "score": 5,
+          "comment": "최고의 영화!",
+          "createdAt": "2026-10-28T10:00:00",
+          "updatedAt": "2026-10-28T10:00:00"
+        }
+      ]
+    },
+    {
+      "name": "다른 회원 평점",
+      "method": "GET",
+      "url": "http://localhost:8080/members/2/ratings",
+      "status": 200,
+      "allowOrigin": null,
+      "body": [
+        {
+          "ratingId": 3,
+          "movieId": 550,
+          "score": 3,
+          "comment": "호불호가 갈릴 것 같아요",
+          "createdAt": "2026-10-28T12:00:00",
+          "updatedAt": "2026-10-28T12:00:00"
+        }
+      ]
+    },
+    {
+      "name": "없는 회원",
+      "method": "GET",
+      "url": "http://localhost:8080/members/999/ratings",
+      "status": 404,
+      "allowOrigin": null,
+      "body": {
+        "code": "MEMBER_NOT_FOUND",
+        "message": "존재하지 않는 회원입니다: 999"
+      }
+    },
+    {
+      "name": "닉네임 검증",
+      "method": "GET",
+      "url": "http://localhost:8080/members/nickname/a",
+      "status": 400,
+      "allowOrigin": null,
+      "body": {
+        "code": "INVALID_REQUEST",
+        "message": "닉네임은 2~12자여야 합니다."
+      }
+    },
+    {
+      "name": "이메일 검증",
+      "method": "GET",
+      "url": "http://localhost:8080/members/email/not-an-email",
+      "status": 400,
+      "allowOrigin": null,
+      "body": {
+        "code": "INVALID_REQUEST",
+        "message": "이메일 형식이 올바르지 않습니다."
+      }
+    },
+    {
+      "name": "회원 ID 형식",
+      "method": "GET",
+      "url": "http://localhost:8080/members/abc/ratings",
+      "status": 400,
+      "allowOrigin": null,
+      "body": {
+        "code": "INVALID_REQUEST",
+        "message": "회원 ID는 양의 정수여야 합니다."
+      }
+    },
+    {
+      "name": "허용 Origin",
+      "method": "GET",
+      "url": "http://localhost:8080/members/nickname/%EC%88%98%ED%98%84",
+      "status": 200,
+      "allowOrigin": "http://localhost:5173",
+      "body": {
+        "available": false
+      }
+    },
+    {
+      "name": "불허 Origin",
+      "method": "GET",
+      "url": "http://localhost:8080/members/1/ratings",
+      "status": 403,
+      "allowOrigin": null,
+      "body": "Invalid CORS request"
+    },
+    {
+      "name": "Preflight",
+      "method": "OPTIONS",
+      "url": "http://localhost:8080/members/1/ratings",
+      "status": 200,
+      "allowOrigin": "http://localhost:5173",
+      "body": ""
+    },
+    {
+      "name": "워크북 따옴표 예시 확인",
+      "method": "GET",
+      "url": "http://localhost:8080/members/nickname/%22%EC%88%98%ED%98%84%22",
+      "status": 200,
+      "allowOrigin": null,
+      "body": {
+        "available": true
+      }
+    }
+  ]
+}

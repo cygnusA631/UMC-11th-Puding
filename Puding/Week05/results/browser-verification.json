@@ -1,0 +1,39 @@
+{
+  "verifiedAt": "2026-10-28 Asia/Seoul",
+  "frontend": "http://localhost:5173/members",
+  "backend": "http://localhost:8080",
+  "captureStatus": "No screenshot files created; user will capture and attach them.",
+  "checks": [
+    {
+      "phase": "CORS disabled",
+      "action": "Nickname check for 수현",
+      "observed": "Connection guidance in UI; console TypeError: Failed to fetch; direct HTTP was 200 without Access-Control-Allow-Origin"
+    },
+    {
+      "phase": "CORS enabled",
+      "action": "Nickname check for 수현",
+      "observed": "이미 사용 중인 닉네임; expanded details HTTP 200 and available false"
+    },
+    {
+      "phase": "CORS enabled",
+      "action": "Email check for noco@umc.com",
+      "observed": "이미 사용 중인 이메일; expanded details HTTP 200 and available false"
+    },
+    {
+      "phase": "CORS enabled",
+      "action": "Ratings for member 1",
+      "observed": "2 cards, movie155/rating2 then movie550/rating1; expanded HTTP200 JSON"
+    },
+    {
+      "phase": "CORS enabled",
+      "action": "Nickname 푸딩 and email puding@example.com",
+      "observed": "Both available in UI"
+    },
+    {
+      "phase": "CORS enabled",
+      "action": "Ratings for member 999",
+      "observed": "해당 회원을 찾을 수 없어요. 회원 번호를 확인해 주세요."
+    }
+  ],
+  "finalState": "Normal CORS-enabled backend and frontend running; seed values restored in UI and all request details expanded."
+}
