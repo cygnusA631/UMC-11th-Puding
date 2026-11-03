@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/members"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "capture6_{{runTag}}@example.com",
+      "password": "Umc!1234",
+      "nickname": "푸딩{{runTag}}"
+    }
+scripts:
+  - type: beforeRequest
+    code: pm.collectionVariables.set('runTag', String(Date.now()).slice(-8));
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test('HTTP 201', () => pm.response.to.have.status(201));
+      pm.collectionVariables.set('memberId', pm.response.json().result.memberId); pm.test('No password', () => pm.expect(pm.response.json().result).not.to.have.property('password'));
+    language: text/javascript
+order: 1000

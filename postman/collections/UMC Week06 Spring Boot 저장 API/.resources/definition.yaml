@@ -1,0 +1,8 @@
+$kind: collection
+description: 01부터 순서대로 실행. 01 재실행 시 새 실습 회원을 생성하고 ID 변수를 갱신합니다. DB 제약 우회 재현은 통합 테스트 결과를 참고하세요.
+variables:
+  baseUrl: http://localhost:8080
+  runTag: ""
+  memberId: ""
+  otherMemberId: ""
+  ratingId: ""

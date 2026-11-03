@@ -1,0 +1,7 @@
+simulation: week06-tmdb
+routing: path
+mocks:
+  - name: week06-tmdb
+    routeKey: tmdb
+    origin: api.themoviedb.org
+    path: postman/mocks/week06-tmdb

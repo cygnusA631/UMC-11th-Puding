@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/members/{{otherMemberId}}/ratings/{{ratingId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "score": 4,
+      "comment": "수정 완료"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('HTTP 403', () => pm.response.to.have.status(403));
+      pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });
+    language: text/javascript
+order: 9000

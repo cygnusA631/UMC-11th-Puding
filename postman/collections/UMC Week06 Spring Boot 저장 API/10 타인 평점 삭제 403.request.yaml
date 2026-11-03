@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{baseUrl}}/members/{{otherMemberId}}/ratings/{{ratingId}}"
+method: DELETE
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('HTTP 403', () => pm.response.to.have.status(403));
+      pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });
+    language: text/javascript
+order: 10000

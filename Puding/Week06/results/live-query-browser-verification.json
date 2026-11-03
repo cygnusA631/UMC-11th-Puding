@@ -1,0 +1,116 @@
+{
+  "verifiedAt": "2026-11-03T07:38:30.452Z",
+  "timezone": "Asia/Seoul",
+  "dataSource": "Live TMDB API, read-only browser smoke check",
+  "success": true,
+  "checks": [
+    {
+      "name": "Live popular pages render and fresh page-one cache avoids a new API response",
+      "passed": true,
+      "evidence": {
+        "page1Cards": 20,
+        "page2Cards": 20,
+        "page1ResponsesBeforeReturn": 1,
+        "page1ResponsesAfterReturn": 1
+      }
+    },
+    {
+      "name": "Live Korean search renders actual results",
+      "passed": true,
+      "evidence": {
+        "query": "인셉션",
+        "displayedCards": 3,
+        "selectedTitle": "인셉션"
+      }
+    },
+    {
+      "name": "Live movie detail matches the selected result",
+      "passed": true,
+      "evidence": {
+        "title": "인셉션",
+        "detailUrl": "/movies/27205"
+      }
+    },
+    {
+      "name": "Live Devtools exposes list, search and detail cache entries",
+      "passed": true,
+      "evidence": {
+        "queryKeys": [
+          [
+            "movies",
+            "list",
+            {
+              "page": 1
+            }
+          ],
+          [
+            "movies",
+            "list",
+            {
+              "page": 2
+            }
+          ],
+          [
+            "movies",
+            "search",
+            {
+              "query": "",
+              "page": 1
+            }
+          ],
+          [
+            "movies",
+            "search",
+            {
+              "query": "인셉션",
+              "page": 1
+            }
+          ],
+          [
+            "movies",
+            "detail",
+            27205
+          ]
+        ],
+        "uncaughtRuntimeErrors": 0
+      }
+    }
+  ],
+  "responses": [
+    {
+      "pathname": "/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "pathname": "/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "2"
+      },
+      "status": 200
+    },
+    {
+      "pathname": "/3/search/movie",
+      "query": {
+        "query": "인셉션",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "pathname": "/3/movie/27205",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "note": "No screenshots or token values were captured. This is a point-in-time live check, not a guarantee of future TMDB availability."
+}

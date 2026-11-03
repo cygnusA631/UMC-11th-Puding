@@ -1,0 +1,110 @@
+{
+  "verifiedAt": "2026-11-03T15:48:44.013000+09:00",
+  "database": "umc_movie_week06",
+  "environment": {
+    "java": "21.0.12.1",
+    "springBoot": "3.5.0",
+    "mysql": "8.4.11"
+  },
+  "command": "./gradlew test --no-daemon",
+  "source": "study/build/test-results/test/TEST-com.umc.movie.MovieWriteApiIntegrationTests.xml",
+  "suite": "com.umc.movie.MovieWriteApiIntegrationTests",
+  "tests": 16,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "durationSeconds": 1.285,
+  "cases": [
+    {
+      "name": "signupRejectsMissingFieldsAndInvalidEmailNicknamePassword()",
+      "durationSeconds": 0.439,
+      "status": "passed"
+    },
+    {
+      "name": "duplicateEmailAndNicknameHaveDistinctCodesWithoutInserts()",
+      "durationSeconds": 0.034,
+      "status": "passed"
+    },
+    {
+      "name": "missingRatingPatchAndDeleteReturn404()",
+      "durationSeconds": 0.035,
+      "status": "passed"
+    },
+    {
+      "name": "readApisRemainCompatible()",
+      "durationSeconds": 0.03,
+      "status": "passed"
+    },
+    {
+      "name": "optionalCommentCanBeNullAndScoreBoundariesAreAccepted()",
+      "durationSeconds": 0.038,
+      "status": "passed"
+    },
+    {
+      "name": "ratingsCreatePatchReadDeleteLifecycleAnd204Body()",
+      "durationSeconds": 0.066,
+      "status": "passed"
+    },
+    {
+      "name": "databaseUniqueConstraintStillMapsTo409WhenPrecheckMissesDuplicate()",
+      "durationSeconds": 0.193,
+      "status": "passed"
+    },
+    {
+      "name": "invalidRatingInputsAre400WithoutWrites()",
+      "durationSeconds": 0.023,
+      "status": "passed"
+    },
+    {
+      "name": "invalidPathAndUnreadableJsonUseSameErrorEnvelope()",
+      "durationSeconds": 0.013,
+      "status": "passed"
+    },
+    {
+      "name": "bcryptLimitIsCheckedInUtf8BytesWithoutRejecting72ByteBoundary()",
+      "durationSeconds": 0.122,
+      "status": "passed"
+    },
+    {
+      "name": "patchPreflightAllowsJsonAndOnlyConfiguredOrigin()",
+      "durationSeconds": 0.013,
+      "status": "passed"
+    },
+    {
+      "name": "duplicateRatingIs409AndDoesNotAddAnotherRow()",
+      "durationSeconds": 0.013,
+      "status": "passed"
+    },
+    {
+      "name": "invalidPatchCannotChangeExistingRating()",
+      "durationSeconds": 0.012,
+      "status": "passed"
+    },
+    {
+      "name": "signupPersistsBcryptAndReturnsOnlyPublicFields()",
+      "durationSeconds": 0.223,
+      "status": "passed"
+    },
+    {
+      "name": "missingMemberCannotCreateRating()",
+      "durationSeconds": 0.009,
+      "status": "passed"
+    },
+    {
+      "name": "anotherMemberCannotPatchOrDeleteOwnedRating()",
+      "durationSeconds": 0.011,
+      "status": "passed"
+    }
+  ],
+  "databaseBackstop": {
+    "test": "databaseUniqueConstraintStillMapsTo409WhenPrecheckMissesDuplicate()",
+    "method": "MockitoSpyBean bypasses only existsByEmail precheck for a committed fixture; real MySQL UNIQUE rejects insert; HTTP409 MEMBER4091 asserted; fixture removed in finally.",
+    "scope": "Deterministic database-constraint path verification, not simultaneous concurrent HTTP requests.",
+    "sanitizedLogExcerpt": [
+      "SQL Error: 1062, SQLState: 23000",
+      "Duplicate entry '[redacted synthetic value]' for key 'member.uk_member_email'"
+    ]
+  },
+  "sanitization": "Host name, local account paths, JDBC identifiers and full logs omitted; duplicate input value redacted; no credentials, password hashes, or SQL parameter values included.",
+  "screenshots": "User captures and attaches; no screenshots generated."
+}

@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/members"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "capture6_{{runTag}}@example.com",
+      "password": "Umc!1234",
+      "nickname": "새닉{{runTag}}"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('HTTP 409', () => pm.response.to.have.status(409));
+      pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });
+    language: text/javascript
+order: 3000

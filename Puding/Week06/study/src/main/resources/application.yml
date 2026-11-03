@@ -1,0 +1,20 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:13306}/${DB_NAME:umc_movie_week06}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD}
+  jackson:
+    deserialization:
+      accept-float-as-int: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+app:
+  cors:
+    enabled: ${APP_CORS_ENABLED:true}
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:5173}

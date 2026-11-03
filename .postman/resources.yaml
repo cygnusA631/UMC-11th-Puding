@@ -5,6 +5,7 @@ workspace:
 cloudResources:
   collections:
     ../postman/collections/UMC Week05 Spring Boot 영화 평점 API: 5ad2fb35-40f3-48fc-9c8e-7940823fceac
+    ../postman/collections/UMC Week06 Spring Boot 저장 API: 27794a7d-d7a9-4ec6-bb75-40106124e244
 
 # All resources in the `postman/` folder are automatically registered in Local View.
 # Point to additional files outside the `postman/` folder to register them individually. Example:

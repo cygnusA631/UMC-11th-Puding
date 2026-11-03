@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/members/{{memberId}}/ratings/{{ratingId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "score": 4,
+      "comment": "수정 완료"
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test('HTTP 200', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 11000

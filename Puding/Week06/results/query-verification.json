@@ -1,0 +1,164 @@
+{
+  "generatedAt": "2026-11-03T07:36:40.695Z",
+  "dataSource": "Local Postman simulation with synthetic TMDB-shaped fixtures; NOT live TMDB",
+  "importedSource": [
+    "src/config/query-client.ts",
+    "src/api/movies/movie-query-options.ts"
+  ],
+  "success": true,
+  "passed": 11,
+  "total": 11,
+  "checks": [
+    {
+      "name": "List pages retain distinct data and reuse fresh page-one cache",
+      "passed": true,
+      "evidence": {
+        "pageOneIds": [
+          550,
+          155
+        ],
+        "pageTwoIds": [
+          680
+        ],
+        "httpRequests": 2,
+        "pageOneHttpRequests": 1
+      },
+      "elapsedMs": 17
+    },
+    {
+      "name": "Search cache separates keywords/pages and normalizes surrounding whitespace",
+      "passed": true,
+      "evidence": {
+        "httpRequests": 3,
+        "keywordAndPagePairs": [
+          [
+            "alpha",
+            "1"
+          ],
+          [
+            "beta",
+            "1"
+          ],
+          [
+            "alpha",
+            "2"
+          ]
+        ]
+      },
+      "elapsedMs": 8
+    },
+    {
+      "name": "Movie detail IDs retain separate cache entries",
+      "passed": true,
+      "evidence": {
+        "detailIds": [
+          550,
+          155
+        ],
+        "httpRequests": 2,
+        "cachedRepeatId": 550
+      },
+      "elapsedMs": 5
+    },
+    {
+      "name": "Disabled empty search and invalid IDs do not start HTTP requests",
+      "passed": true,
+      "evidence": {
+        "httpRequests": 0,
+        "emptySearch": {
+          "status": "pending",
+          "fetchStatus": "idle",
+          "isPending": true,
+          "isLoading": false
+        }
+      },
+      "elapsedMs": 35
+    },
+    {
+      "name": "Empty results are a successful response rather than a query error",
+      "passed": true,
+      "evidence": {
+        "resultCount": 0,
+        "queryStatus": "success",
+        "httpRequests": 1
+      },
+      "elapsedMs": 3
+    },
+    {
+      "name": "HTTP 401 is not automatically retried",
+      "passed": true,
+      "evidence": {
+        "statuses": [
+          401
+        ],
+        "totalAttempts": 1
+      },
+      "elapsedMs": 5
+    },
+    {
+      "name": "A transient HTTP 500 retries once and recovers",
+      "passed": true,
+      "evidence": {
+        "statuses": [
+          500,
+          200
+        ],
+        "totalAttempts": 2,
+        "recovered": true
+      },
+      "elapsedMs": 1012
+    },
+    {
+      "name": "Persistent HTTP 500 stops after two total attempts",
+      "passed": true,
+      "evidence": {
+        "statuses": [
+          500,
+          500
+        ],
+        "totalAttempts": 2,
+        "kyRetries": 0
+      },
+      "elapsedMs": 1015
+    },
+    {
+      "name": "Client cancellation settles the query and ignores delayed upstream completion",
+      "passed": true,
+      "evidence": {
+        "cancellationError": "CancelledError",
+        "fetchStatus": "idle",
+        "noCachedDataAfterDelayedCompletion": true,
+        "directApiAbortError": "AbortError",
+        "httpRequests": 2,
+        "upstreamAbortObserved": false,
+        "upstreamStatusAfterDelay": 200,
+        "proxyNote": "Upstream disconnect propagation is not assumed; the local reverse proxy can finish upstream work after client cancellation."
+      },
+      "elapsedMs": 1363
+    },
+    {
+      "name": "Actual 60-second list and 30-second detail stale boundaries (virtual Date)",
+      "passed": true,
+      "evidence": {
+        "clock": "Node MockTimers Date; not elapsed wall-clock time",
+        "listFreshAtMs": 59999,
+        "listStaleAtMs": 60000,
+        "detailFreshAtMs": 29999,
+        "detailStaleAtMs": 30000,
+        "staleDataRetained": true
+      },
+      "elapsedMs": 0
+    },
+    {
+      "name": "Actual five-minute GC starts after last observer leaves (virtual timers)",
+      "passed": true,
+      "evidence": {
+        "clock": "Node MockTimers Date+setTimeout; not elapsed wall-clock time",
+        "retainedWhileObservedMs": 300001,
+        "inactiveRetainedAtMs": 299999,
+        "inactiveRemovedAtMs": 300000
+      },
+      "elapsedMs": 0
+    }
+  ]
+}

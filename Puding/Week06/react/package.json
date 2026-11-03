@@ -1,0 +1,40 @@
+{
+  "name": "umcine-week06",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "dev:fixtures": "node scripts/dev-fixtures.mjs",
+    "dev:live": "node --env-file-if-exists=../../Week05/react/.env.local node_modules/vite/bin/vite.js --host 127.0.0.1 --port 5176",
+    "verify:browser": "node scripts/verify-browser.mjs",
+    "verify:query": "node scripts/verify-query.mjs",
+    "verify:live": "node scripts/verify-live.mjs"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/react-query": "^5.105.1",
+    "@tanstack/react-router": "^1.170.40",
+    "clsx": "^2.1.1",
+    "ky": "2.2.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@tanstack/react-query-devtools": "^5.105.1",
+    "@tanstack/router-plugin": "^1.168.41",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.0"
+  }
+}

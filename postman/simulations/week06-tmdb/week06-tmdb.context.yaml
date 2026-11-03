@@ -1,0 +1,37 @@
+purpose:
+  stands_in_for: TMDB popular movies, movie search, and movie details GET endpoints.
+  unblocks: Deterministic Week06 TanStack Query cache, cancellation, loading, empty-result, and failure/retry verification without live credentials.
+assumptions:
+  - id: tmdb-read-response-shape
+    status: supported
+    claim: The caller's popular/search requests consume page, results, total_pages, and total_results; detail consumes the selected movie's fields.
+    reason: Official endpoint documentation and a read-only live browser smoke check support the fields used by this caller. Fixture titles and IDs are synthetic and do not claim to mirror the live catalog.
+    verification: On 2026-11-03, live Chrome rendered 20 movies on each of two popular pages, three Korean search results, and the selected detail. Four live checks passed. Eleven Query integration and twelve fixture-browser checks passed independently.
+    source: https://developer.themoviedb.org/reference/movie-popular-list; https://developer.themoviedb.org/reference/search-movie; https://developer.themoviedb.org/reference/movie-details; Puding/Week06/results/live-query-browser-verification.json; Puding/Week06/results/query-verification.json; Puding/Week06/results/query-browser-verification.json
+    updated_at: "2026-11-03"
+  - id: fixture-error-behaviour
+    status: supported
+    claim: In the exercised stand-in scenarios, the caller treats an empty results array as success, does not retry 401, retries 500 once, and recovers through manual retry after a persistent failure.
+    reason: This is evidence of caller behaviour under deliberately injected responses, not a guarantee about when TMDB will return those errors. ky retries are disabled so retry counts belong to Query.
+    verification: Query tests observed one 401 attempt, two persistent-500 attempts, a 500 then 200 recovery, and successful empty arrays. Browser tests observed the corresponding empty/error/retry UI and retained cached data during background failure.
+    source: postman/mocks/week06-tmdb/default.js; Puding/Week06/react/src/config/query-client.ts; Puding/Week06/results/query-verification.json; Puding/Week06/results/query-browser-verification.json
+    updated_at: "2026-11-03"
+  - id: cancellation-upstream-disconnect
+    status: unknown
+    claim: Client AbortSignal cancellation always terminates TMDB's upstream processing.
+    reason: Client cancellation does not establish provider-side termination. The local Postman proxy completed its delayed upstream request after the caller canceled; this is a proxy observation, not live-provider evidence.
+    verification: Actual queryFn rejected with AbortError. Canceled Query settled idle without data even after delayed completion. Chrome observed the slow request fail on search change and the newer search remained visible. No live provider-side cancellation measurement was made.
+    source: Puding/Week06/react/scripts/verify-query.mjs; Puding/Week06/react/scripts/verify-browser.mjs; Puding/Week06/results/query-verification.json; Puding/Week06/results/query-browser-verification.json
+    updated_at: "2026-11-03"
+  - id: fixture-provenance
+    status: supported
+    claim: This local mock is maintained from the caller's read-only endpoint shapes and official TMDB documentation, rather than an owner-published Postman mock.
+    reason: postman status failed locally with SecItemCopyMatching -50, so owner workspace discovery was unavailable. Local simulation run with --no-history succeeded; no cloud upload or deployment was performed.
+    verification: CLI 1.84.0 served the tmdb routeKey on port18086; its request events confirmed movie popular, search, and detail paths were exercised. The handler accepts only a synthetic fixture token and logs no Authorization values.
+    source: postman/mocks/week06-tmdb/config.yaml; postman/mocks/week06-tmdb/default.js; postman/simulations/week06-tmdb/week06-tmdb.sim.yaml
+    updated_at: "2026-11-03"
+fingerprints:
+  - id: week06-query-2026-11-03
+    date: "2026-11-03"
+    commit: d1a9edf10f39ed7e55b12425eb9c5726ce1332d7 (dirty working tree; new Week06 frontend and verification files are uncommitted)
+    cli: Postman 1.84.0; TanStack Query 5.105.1; Playwright 1.64.1; Node 22.19.0

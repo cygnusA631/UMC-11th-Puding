@@ -1,0 +1,512 @@
+{
+  "info": {
+    "name": "UMC Week06 Spring Boot 저장 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "01부터 순서대로 실행. 01 재실행 시 새 실습 회원을 생성하고 ID 변수를 갱신합니다. DB 제약 우회 재현은 통합 테스트 결과를 참고하세요."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "runTag",
+      "value": ""
+    },
+    {
+      "key": "memberId",
+      "value": ""
+    },
+    {
+      "key": "otherMemberId",
+      "value": ""
+    },
+    {
+      "key": "ratingId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "01 회원가입 201",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set('runTag', String(Date.now()).slice(-8));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set('memberId', pm.response.json().result.memberId); pm.test('No password', () => pm.expect(pm.response.json().result).not.to.have.property('password'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/members",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"capture6_{{runTag}}@example.com\",\n  \"password\": \"Umc!1234\",\n  \"nickname\": \"푸딩{{runTag}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "02 다른 회원 가입",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set('otherMemberId', pm.response.json().result.memberId);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/members",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"other6_{{runTag}}@example.com\",\n  \"password\": \"Umc!1234\",\n  \"nickname\": \"다른{{runTag}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "03 이메일 중복 409",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 409', () => pm.response.to.have.status(409));",
+              "pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/members",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"capture6_{{runTag}}@example.com\",\n  \"password\": \"Umc!1234\",\n  \"nickname\": \"새닉{{runTag}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "04 닉네임 중복 409",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 409', () => pm.response.to.have.status(409));",
+              "pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/members",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"unused6_{{runTag}}@example.com\",\n  \"password\": \"Umc!1234\",\n  \"nickname\": \"푸딩{{runTag}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "05 이메일 검증 400",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+              "pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/members",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"not-email\",\n  \"password\": \"Umc!1234\",\n  \"nickname\": \"푸딩{{runTag}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "06 평점 등록 201",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set('ratingId', pm.response.json().result);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/members/{{memberId}}/ratings",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"movieId\": 550,\n  \"score\": 5,\n  \"comment\": \"6주차 실습\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "07 평점 중복 409",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 409', () => pm.response.to.have.status(409));",
+              "pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/members/{{memberId}}/ratings",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"movieId\": 550,\n  \"score\": 5,\n  \"comment\": \"6주차 실습\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "08 별점 검증 400",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+              "pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/members/{{memberId}}/ratings",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"movieId\": 155,\n  \"score\": 6,\n  \"comment\": \"6주차 실습\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "09 타인 평점 수정 403",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 403', () => pm.response.to.have.status(403));",
+              "pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/members/{{otherMemberId}}/ratings/{{ratingId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"score\": 4,\n  \"comment\": \"수정 완료\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "10 타인 평점 삭제 403",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 403', () => pm.response.to.have.status(403));",
+              "pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/members/{{otherMemberId}}/ratings/{{ratingId}}"
+      }
+    },
+    {
+      "name": "11 평점 수정 200",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/members/{{memberId}}/ratings/{{ratingId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"score\": 4,\n  \"comment\": \"수정 완료\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "12 수정 결과 조회",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/members/{{memberId}}/ratings"
+      }
+    },
+    {
+      "name": "13 없는 평점 수정 404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+              "pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/members/{{memberId}}/ratings/9223372036854775807",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"score\": 4,\n  \"comment\": \"수정 완료\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "14 평점 삭제 204",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 204', () => pm.response.to.have.status(204));",
+              "pm.test('Empty body', () => pm.expect(pm.response.text()).to.eql(''));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/members/{{memberId}}/ratings/{{ratingId}}"
+      }
+    },
+    {
+      "name": "15 삭제 후 빈 목록",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Empty list', () => pm.expect(pm.response.json()).to.eql([]));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/members/{{memberId}}/ratings"
+      }
+    },
+    {
+      "name": "16 삭제된 평점 재삭제 404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+              "pm.test('Failure envelope', () => { const b=pm.response.json(); pm.expect(b.isSuccess).to.eql(false); pm.expect(b.result).to.eql(null); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/members/{{memberId}}/ratings/{{ratingId}}"
+      }
+    }
+  ]
+}

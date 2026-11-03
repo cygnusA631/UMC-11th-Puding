@@ -1,0 +1,302 @@
+{
+  "verifiedAt": "2026-11-03T07:36:19.228Z",
+  "timezone": "Asia/Seoul",
+  "dataSource": "local Postman simulation; synthetic TMDB-shaped fixtures, NOT live TMDB",
+  "checks": [
+    {
+      "name": "Initial loading, list pagination and fresh cache reuse",
+      "passed": true,
+      "evidence": {
+        "page1RequestsBeforeReturn": 1,
+        "page1RequestsAfterReturn": 1
+      }
+    },
+    {
+      "name": "Empty and whitespace searches are disabled with an input prompt",
+      "passed": true,
+      "evidence": {
+        "requestsAdded": 0,
+        "status": "pending",
+        "fetchStatus": "idle"
+      }
+    },
+    {
+      "name": "Search keys isolate normalized text and page and reuse matching cache",
+      "passed": true,
+      "evidence": {
+        "alphaPage1RequestsBeforeReturn": 1,
+        "alphaPage1RequestsAfterReturn": 1
+      }
+    },
+    {
+      "name": "A successful empty response renders the empty-result UI",
+      "passed": true
+    },
+    {
+      "name": "A canceled slow search cannot overwrite the next search",
+      "passed": true
+    },
+    {
+      "name": "A 500 response is retried once, then manual retry recovers",
+      "passed": true,
+      "evidence": {
+        "failedAttemptsIncludingAutomaticRetry": 2,
+        "manualRetryRecovered": true
+      }
+    },
+    {
+      "name": "Detail keys isolate movie IDs and Devtools shows real cached queries",
+      "passed": true,
+      "evidence": {
+        "detail550RequestsBeforeReturn": 1,
+        "detail550RequestsAfterReturn": 1
+      }
+    },
+    {
+      "name": "Invalid IDs do not fetch, and a missing movie renders a 404 message",
+      "passed": true
+    },
+    {
+      "name": "Actual 30s detail staleTime expires without polling and refetches on remount",
+      "passed": true,
+      "evidence": {
+        "clock": "Playwright browser virtual clock; production 30000ms option unchanged",
+        "requestAddedAtStaleTransition": 0,
+        "requestAddedOnRemount": 1
+      }
+    },
+    {
+      "name": "Stale background errors keep cached movies visible and retry recovers",
+      "passed": true
+    },
+    {
+      "name": "Actual 5m gcTime preserves active cache and removes inactive cache",
+      "passed": true,
+      "evidence": {
+        "clock": "Playwright browser virtual clock; production 300000ms option unchanged",
+        "activeCacheAfter300100ms": "present",
+        "inactiveCacheAfter299000ms": "present",
+        "inactiveCacheAfter300100ms": "removed"
+      }
+    },
+    {
+      "name": "No uncaught browser runtime errors",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "pathname": "/tmdb/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "2"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/search/movie",
+      "query": {
+        "query": "alpha",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/search/movie",
+      "query": {
+        "query": "alpha",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "2"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/search/movie",
+      "query": {
+        "query": "beta",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/search/movie",
+      "query": {
+        "query": "__empty__",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/search/movie",
+      "query": {
+        "query": "slow",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": null,
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "pathname": "/tmdb/3/search/movie",
+      "query": {
+        "query": "newer",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/search/movie",
+      "query": {
+        "query": "failure",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 500,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/search/movie",
+      "query": {
+        "query": "failure",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 500,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/search/movie",
+      "query": {
+        "query": "failure",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/550",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/155",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/999",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 404,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/550",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/550",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 500,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 500,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200,
+      "failure": null
+    },
+    {
+      "pathname": "/tmdb/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200,
+      "failure": null
+    }
+  ],
+  "note": "No screenshots were captured. Time-based checks use the browser virtual clock with production option values unchanged."
+}

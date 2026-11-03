@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/members/{{memberId}}/ratings"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "movieId": 550,
+      "score": 5,
+      "comment": "6주차 실습"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('HTTP 201', () => pm.response.to.have.status(201));
+      pm.collectionVariables.set('ratingId', pm.response.json().result);
+    language: text/javascript
+order: 6000
